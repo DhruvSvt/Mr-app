@@ -62,7 +62,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($cities as $key => $city)
+                        @forelse ($cities as $key => $city)
                             <tr>
                                 <th scope="row">{{ $key + 1 }}</th>
                                 <td>{{ $city->city_name ?? '-' }}</td>
@@ -124,7 +124,11 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <td colspan="5" class="text-center">
+                                <h3 class="font-weight-600" >No Data Found !!</h3>
+                            </td>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

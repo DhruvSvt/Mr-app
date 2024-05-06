@@ -53,7 +53,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($products as $key => $product)
+                        @forelse ($products as $key => $product)
                             <tr>
                                 <th scope="row">{{ $key + 1 }}</th>
                                 <td>{{ $product->name ?? '-' }}</td>
@@ -107,7 +107,11 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <td colspan="4" class="text-center">
+                                <h3 class="font-weight-600">No Data Found !!</h3>
+                            </td>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

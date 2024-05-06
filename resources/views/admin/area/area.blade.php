@@ -75,7 +75,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($areas as $key => $area)
+                        @forelse ($areas as $key => $area)
                             <tr>
                                 <th scope="row">{{ $key + 1 }}</th>
                                 <td>{{ $area->area_name ?? '-' }}</td>
@@ -113,7 +113,8 @@
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="form-group">
-                                                            <label for="area_name" class="col-form-label">Area Name</label>
+                                                            <label for="area_name" class="col-form-label">Area
+                                                                Name</label>
                                                             <input type="text" class="form-control" name="area_name"
                                                                 required>
                                                             @error('area_name')
@@ -152,7 +153,11 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <td colspan="6" class="text-center">
+                                <h3 class="font-weight-600">No Data Found !!</h3>
+                            </td>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

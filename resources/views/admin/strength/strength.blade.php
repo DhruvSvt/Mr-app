@@ -53,7 +53,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($strengths as $key => $strength)
+                        @forelse($strengths as $key => $strength)
                             <tr>
                                 <th scope="row">{{ $key + 1 }}</th>
                                 <td>{{ $strength->name ?? '-' }}</td>
@@ -85,7 +85,8 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <form action="{{ route('strength.update', $strength->id) }}"
-                                                        id="editForm" method="POST" data-route="{{ route('strength.update', ':id') }}">
+                                                        id="editForm" method="POST"
+                                                        data-route="{{ route('strength.update', ':id') }}">
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="form-group">
@@ -106,7 +107,11 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <td colspan="4" class="text-center">
+                                <h3 class="font-weight-600">No Data Found !!</h3>
+                            </td>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
