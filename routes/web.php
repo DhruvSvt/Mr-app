@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\StatusController;
@@ -40,6 +41,9 @@ Route::middleware('auth')->prefix('admin')->group(function() {
 
     // -------------------- Speciality Resource --------------------
     Route::resource('speciality',SpecialityController::class);
+
+    // -------------------- Doctor Resource --------------------
+    Route::resource('doctor',DoctorController::class);
 
     // -------------------- Global Status Resource --------------------
     Route::post('status',[StatusController::class,'statusUpdate'])->name('status');
