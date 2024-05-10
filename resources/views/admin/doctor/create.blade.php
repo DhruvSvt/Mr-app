@@ -50,7 +50,24 @@
                                     </div>
                                     <div class="col-md-12 my-3">
                                         <button type="button" id="addcustom_area"
-                                            class="btn btn-danger float-right">+</button>
+                                            class="btn btn-warning float-right">+</button>
+                                    </div>
+                                    <div class="col-md-12 customarea0">
+                                        <div class="row">
+                                            <div class="col-md-5 form-group mb-3 ">
+                                                <label for="location">Location</label>
+                                                <input type="text" class="form-control"
+                                                    placeholder="Enter your location">
+                                            </div>
+                                            <div class="col-md-5 form-group mb-3">
+                                                <label for="address">Address</label>
+                                                <input type="text" class="form-control" placeholder="Enter your Address">
+                                            </div>
+                                            <div class="col-md-2 my-auto">
+                                                <button type="button" class="btn btn-danger btn_remove_area float-right"
+                                                    data-id="0">X</button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="row" id="custom_area_container"></div>
