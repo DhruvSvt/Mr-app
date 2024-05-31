@@ -48,24 +48,30 @@
                                         <label for="location">Choose Photo</label>
                                         <input type="file" class="form-control">
                                     </div>
-                                    <div class="col-md-12 my-3">
-                                        <button type="button" id="addcustom_area"
-                                            class="btn btn-warning float-right">+</button>
-                                    </div>
                                     <div class="col-md-12 customarea0">
                                         <div class="row">
-                                            <div class="col-md-5 form-group mb-3 ">
-                                                <label for="location">Location</label>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Enter your location">
+                                            <div class="col-md-2 form-group mb-3 ">
+                                                <label for="longitude">Longitude</label>
+                                                <input type="number" class="form-control"
+                                                    placeholder="Enter your Longitude" step="0.001" min="0">
                                             </div>
-                                            <div class="col-md-5 form-group mb-3">
+                                            <div class="col-md-2 form-group mb-3 ">
+                                                <label for="location">Latitude</label>
+                                                <input type="number" class="form-control" placeholder="Enter your Latitude"
+                                                    step="0.001" min="0">
+                                            </div>
+                                            <div class="col-md-3 form-group mb-3 ">
+                                                <label for="location">Title</label>
+                                                <input type="text" class="form-control" placeholder="Enter title">
+                                            </div>
+                                            <div class="col-md-3 form-group mb-3">
                                                 <label for="address">Address</label>
-                                                <input type="text" class="form-control" placeholder="Enter your Address">
+                                                <input type="text" class="form-control" placeholder="Enter the Address">
                                             </div>
+
                                             <div class="col-md-2 my-auto">
-                                                <button type="button" class="btn btn-danger btn_remove_area float-right"
-                                                    data-id="0">X</button>
+                                                <button type="button" id="addcustom_area"
+                                                    class="btn btn-warning float-right">+</button>
                                             </div>
                                         </div>
                                     </div>
@@ -95,13 +101,24 @@
                     $('#custom_area_container').append(`<div class="col-md-12 customarea` + k +
                         `">
                             <div class="row">
-                                <div class="col-md-5 form-group mb-3 ">
-                                    <label for="location">Location</label>
-                                    <input type="text" class="form-control" placeholder="Enter your location">
+                                <div class="col-md-2 form-group mb-3 ">
+                                    <label for="longitude">Longitude</label>
+                                    <input type="number" class="form-control"
+                                        placeholder="Enter your Longitude" step="0.001"  min="0">
                                 </div>
-                                <div class="col-md-5 form-group mb-3">
+                                <div class="col-md-2 form-group mb-3 ">
+                                    <label for="location">Latitude</label>
+                                    <input type="number" class="form-control"
+                                        placeholder="Enter your Latitude" step="0.001" min="0">
+                                </div>
+                                <div class="col-md-3 form-group mb-3 ">
+                                    <label for="location">Title</label>
+                                    <input type="text" class="form-control"
+                                        placeholder="Enter title">
+                                </div>
+                                <div class="col-md-3 form-group mb-3">
                                     <label for="address">Address</label>
-                                    <input type="text" class="form-control" placeholder="Enter your Address">
+                                    <input type="text" class="form-control" placeholder="Enter the Address">
                                 </div>
                                 <div class="col-md-2 my-auto">
                                     <button type="button" class="btn btn-danger btn_remove_area float-right" data-id="` +
