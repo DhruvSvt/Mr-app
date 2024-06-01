@@ -21,10 +21,10 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('speciality_id')->nullable();
             $table->string('area_id')->nullable();
-            $table->double('longitude')->nullable();
-            $table->double('latitude')->nullable();
-            $table->string('title')->nullable();
-            $table->longText('addresses')->nullable();
+            $table->json('longitude')->nullable();
+            $table->json('latitude')->nullable();
+            $table->json('title')->nullable();
+            $table->json('addresses')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
