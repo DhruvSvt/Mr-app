@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Area;
 use App\Models\Doctor;
 use App\Models\Speciality;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -99,7 +100,13 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
-        //
+        try {
+            $doctor = Doctor::findOrFail($doctor->id);
+            return view('admin.doctor.detail', compact('doctor'));
+        } catch (\Exception $e) {
+
+            return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request please try again later !!');
+        }
     }
 
     /**

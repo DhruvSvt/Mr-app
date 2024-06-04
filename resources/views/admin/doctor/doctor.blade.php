@@ -42,7 +42,7 @@
                                 <td>{{ $doctor->phn_no ?? '-' }}</td>
                                 <td>{{ $doctor->speciality->name ?? '-' }}</td>
                                 <td>{{ $doctor->area->area_name ?? '-' }}</td>
-                                <td><a href="#" class="btn btn-success">View More</a></td>
+                                <td><a href="{{ route('doctor.show',$doctor->id) }}" class="btn btn-success">View More</a></td>
                                 <td>
                                     <label class="switch switch-success mr-3">
 
@@ -59,7 +59,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <td colspan="6" class="text-center">
+                            <td colspan="10" class="text-center">
                                 <h3 class="font-weight-600">No Data Found !!</h3>
                             </td>
                         @endforelse
