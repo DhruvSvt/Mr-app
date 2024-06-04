@@ -25,6 +25,7 @@ return new class extends Migration
             $table->json('latitude')->nullable();
             $table->json('title')->nullable();
             $table->json('addresses')->nullable();
+            $table->tinyInteger('status')->default(0)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

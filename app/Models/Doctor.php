@@ -20,4 +20,12 @@ class Doctor extends Model
         'title' => 'array',
         'addresses' => 'array',
     ];
+
+    public function speciality(){
+        return $this->belongsTo(Speciality::class,'speciality_id','id');
+    }
+
+    public function area(){
+        return $this->belongsTo(Area::class,'area_id','id');
+    }
 }

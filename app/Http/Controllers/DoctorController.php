@@ -17,7 +17,8 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        return view('admin.doctor.doctor');
+        $doctors = Doctor::all();
+        return view('admin.doctor.doctor', compact('doctors'));
     }
 
     /**
@@ -59,13 +60,10 @@ class DoctorController extends Controller
 
             // Handle the image upload if there is one
             if ($request->hasFile('image')) {
-                $destinationPath = public_path('images/doctors');
-                if (!File::exists($destinationPath)) {
-                    File::makeDirectory($destinationPath, 0755, true);
-                }
+                $destinationPath = 'public/images/doctors';
                 $imageName = time() . '.' . $request->image->extension();
-                $request->image->move($destinationPath, $imageName);
-                $doctor->image = 'images/doctors/' . $imageName;
+                $request->image->storeAs($destinationPath, $imageName);
+                $doctor->image = $imageName;
             }
 
             // Store the doctor information
