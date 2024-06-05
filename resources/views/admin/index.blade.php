@@ -112,7 +112,7 @@
 
         </div>
 
-@include('admin.inc.footer');
+@include('admin.inc.footer')
     </div>
     <!-- ============ Body content End ============= -->
 @endsection
