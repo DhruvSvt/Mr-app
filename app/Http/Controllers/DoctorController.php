@@ -18,8 +18,12 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors = Doctor::all();
-        return view('admin.doctor.doctor', compact('doctors'));
+        try {
+            $doctors = Doctor::all();
+            return view('admin.doctor.doctor', compact('doctors'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request please try again later !!');
+        }
     }
 
     /**
@@ -29,9 +33,13 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        $specialities = Speciality::whereStatus(true)->get();
-        $areas = Area::whereStatus(true)->get();
-        return view('admin.doctor.create', compact('specialities', 'areas'));
+        try {
+            $specialities = Speciality::whereStatus(true)->get();
+            $areas = Area::whereStatus(true)->get();
+            return view('admin.doctor.create', compact('specialities', 'areas'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request please try again later !!');
+        }
     }
 
     /**
@@ -117,7 +125,14 @@ class DoctorController extends Controller
      */
     public function edit(Doctor $doctor)
     {
-        //
+        try {
+            $doctor = Doctor::findOrFail($doctor->id);
+            $specialities = Speciality::whereStatus(true)->get();
+            $areas = Area::whereStatus(true)->get();
+            return view('admin.doctor.edit', compact('doctor', 'specialities', 'areas'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request please try again later !!');
+        }
     }
 
     /**
@@ -129,7 +144,7 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
-        //
+        dd(1);
     }
 
     /**

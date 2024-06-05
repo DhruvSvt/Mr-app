@@ -73,8 +73,8 @@
                                         <div class="row">
                                             <div class="col-md-2 form-group mb-3 ">
                                                 <label for="longitude">Longitude</label>
-                                                <input type="number" class="form-control"
-                                                    placeholder="Enter your Longitude" step="0.001" min="0"
+                                                <input type="text" class="form-control"
+                                                    placeholder="Enter your Longitude"  min="0"
                                                     name="longitude[]">
                                                 @error('longitude[]')
                                                     <p class="text-danger text-sm">{{ $message }}</p>
@@ -82,8 +82,8 @@
                                             </div>
                                             <div class="col-md-2 form-group mb-3 ">
                                                 <label for="location">Latitude</label>
-                                                <input type="number" class="form-control" placeholder="Enter your Latitude"
-                                                    step="0.001" min="0" name="latitude[]">
+                                                <input type="text" class="form-control" placeholder="Enter your Latitude"
+                                                     min="0" name="latitude[]">
                                                 @error('latitude[]')
                                                     <p class="text-danger text-sm">{{ $message }}</p>
                                                 @enderror
@@ -139,8 +139,8 @@
                             <div class="row">
                                 <div class="col-md-2 form-group mb-3 ">
                                     <label for="longitude">Longitude</label>
-                                    <input type="number" class="form-control"
-                                        placeholder="Enter your Longitude" step="0.001" min="0"
+                                    <input type="text" class="form-control"
+                                        placeholder="Enter your Longitude"  min="0"
                                         name="longitude[]">
                                     @error('longitude[]')
                                         <p class="text-danger text-sm">{{ $message }}</p>
@@ -148,8 +148,8 @@
                                 </div>
                                 <div class="col-md-2 form-group mb-3 ">
                                     <label for="location">Latitude</label>
-                                    <input type="number" class="form-control" placeholder="Enter your Latitude"
-                                        step="0.001" min="0" name="latitude[]">
+                                    <input type="text" class="form-control" placeholder="Enter your Latitude"
+                                         min="0" name="latitude[]">
                                     @error('latitude[]')
                                         <p class="text-danger text-sm">{{ $message }}</p>
                                     @enderror

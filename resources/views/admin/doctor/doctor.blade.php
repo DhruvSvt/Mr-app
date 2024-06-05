@@ -42,7 +42,8 @@
                                 <td>{{ $doctor->phn_no ?? '-' }}</td>
                                 <td>{{ $doctor->speciality->name ?? '-' }}</td>
                                 <td>{{ $doctor->area->area_name ?? '-' }}</td>
-                                <td><a href="{{ route('doctor.show',$doctor->id) }}" class="btn btn-success">View More</a></td>
+                                <td><a href="{{ route('doctor.show', $doctor->id) }}" class="btn btn-success">View More</a>
+                                </td>
                                 <td>
                                     <label class="switch switch-success mr-3">
 
@@ -53,9 +54,11 @@
                                     </label>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-warning edit-area-btn">
-                                        <i class="nav-icon i-Pen-2"></i>
-                                    </button>
+                                    <a href="{{ route('doctor.edit',$doctor->id) }}">
+                                        <button type="button" class="btn btn-warning edit-area-btn">
+                                            <i class="nav-icon i-Pen-2"></i>
+                                        </button>
+                                    </a>
                                 </td>
                             </tr>
                         @empty
