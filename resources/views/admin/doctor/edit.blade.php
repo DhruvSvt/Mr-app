@@ -2,8 +2,16 @@
 @section('section')
     <div class="main-content-wrap sidenav-open d-flex flex-column">
         <div class="main-content">
-            <div class="breadcrumb">
-                <h1>Edit Dr. {{ $doctor->name }} Profile <i class="nav-icon i-Doctor"></i></h1>
+            <div class="breadcrumb col-12">
+                <div class="col-6">
+                    <h1><u>Edit Dr. {{ $doctor->name }} Profile <i class="nav-icon i-Doctor"></i></u></h1>
+                </div>
+                <div class="col-6 float-left">
+                    <a href="{{ URL::previous() }}" class="float-right">
+                        <button class="btn btn-dark">Back</button>
+                    </a>
+                </div>
+
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -45,10 +53,10 @@
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="speciality_id">Select Speciality Name</label>
                                         <select class="form-control" name="speciality_id">
-                                            <option value="{{ $doctor->speciality_id }}" selected>
-                                                {{ $doctor->speciality->name }}</option>
                                             @foreach ($specialities as $speciality)
-                                                <option value="{{ $speciality->id }}">{{ $speciality->name }}</option>
+                                                <option value="{{ $speciality->id }}"
+                                                    {{ $speciality->id == $doctor->speciality_id }} ? selected>
+                                                    {{ $speciality->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('speciality_id')
@@ -58,10 +66,9 @@
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="picker1">Select Area Name</label>
                                         <select class="form-control" name="area_id">
-                                            <option value="{{ $doctor->area_id }}" selected>{{ $doctor->area->area_name }}
-                                            </option>
                                             @foreach ($areas as $area)
-                                                <option value="{{ $area->id }}">{{ $area->area_name }}</option>
+                                                <option value="{{ $area->id }}" {{ $area->id == $doctor->area_id }} ?
+                                                    selected>{{ $area->area_name }}</option>
                                             @endforeach
                                         </select>
                                         @error('area_id')
@@ -82,10 +89,7 @@
                                         @enderror
                                     </div>
                                     <?php
-                                    $longitudes = array_values(json_decode($doctor->longitude, true));
-                                    $latitudes = array_values(json_decode($doctor->latitude, true));
-                                    $titles = array_values(json_decode($doctor->title, true));
-                                    $addresses = array_values(json_decode($doctor->addresses, true));
+                                    $longitudes = $doctor->longitude;
                                     $key = 0;
                                     ?>
                                     <div class="col-md-12 customarea0">
@@ -94,8 +98,8 @@
                                                 <div class="col-md-2 form-group mb-3">
                                                     <label for="longitude">Longitude</label>
                                                     <input type="text" class="form-control"
-                                                        placeholder="Enter your Longitude" min="0"
-                                                        name="longitude[]" value="{{ $longitudes[$key] }}">
+                                                        placeholder="Enter your Longitude" min="0" name="longitude[]"
+                                                        value="{{ $doctor->longitude[$key] }}">
                                                     @error('longitude[]')
                                                         <p class="text-danger text-sm">{{ $message }}</p>
                                                     @enderror
@@ -103,8 +107,8 @@
                                                 <div class="col-md-2 form-group mb-3">
                                                     <label for="location">Latitude</label>
                                                     <input type="text" class="form-control"
-                                                        placeholder="Enter your Latitude" min="0"
-                                                        name="latitude[]" value="{{ $latitudes[$key] }}">
+                                                        placeholder="Enter your Latitude" min="0" name="latitude[]"
+                                                        value="{{ $doctor->latitude[$key] }}">
                                                     @error('latitude[]')
                                                         <p class="text-danger text-sm">{{ $message }}</p>
                                                     @enderror
@@ -112,7 +116,7 @@
                                                 <div class="col-md-3 form-group mb-3">
                                                     <label for="location">Title</label>
                                                     <input type="text" class="form-control" placeholder="Enter title"
-                                                        name="title[]" value="{{ $titles[$key] }}">
+                                                        name="title[]" value="{{ $doctor->title[$key] }}">
                                                     @error('title[]')
                                                         <p class="text-danger text-sm">{{ $message }}</p>
                                                     @enderror
@@ -121,7 +125,7 @@
                                                     <label for="address">Address</label>
                                                     <input type="text" class="form-control"
                                                         placeholder="Enter the Address" name="addresses[]"
-                                                        value="{{ $addresses[$key] }}">
+                                                        value="{{ $doctor->addresses[$key] }}">
                                                     @error('addresses[]')
                                                         <p class="text-danger text-sm">{{ $message }}</p>
                                                     @enderror

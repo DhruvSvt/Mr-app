@@ -10,7 +10,7 @@
             </li>
             <li class="nav-item " data-item="masters">
                 <a class="nav-item-hold" href="#">
-                   <i class="nav-icon i-Settings-Window"></i>
+                    <i class="nav-icon i-Settings-Window"></i>
                     <span class="nav-text">Masters</span>
                 </a>
                 <div class="triangle"></div>
@@ -70,13 +70,13 @@
             <li class="nav-item ">
                 <a class="" href="{{ route('doctor.create') }}">
                     <i class="nav-icon i-Add-User"></i>
-                    <span class="item-name">Create</span>
+                    <span class="item-name">Create Doctor</span>
                 </a>
             </li>
             <li class="nav-item ">
                 <a class="" href="{{ route('doctor.index') }}">
-                    <i class="nav-icon i-Checked-User"></i>
-                    <span class="item-name">View</span>
+                    <i class="nav-icon i-Stethoscope"></i>
+                    <span class="item-name">Doctor Details</span>
                 </a>
             </li>
         </ul>

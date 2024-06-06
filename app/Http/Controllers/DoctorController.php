@@ -8,6 +8,7 @@ use App\Models\Speciality;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
 {
@@ -52,53 +53,38 @@ class DoctorController extends Controller
     {
         try {
             // Validate the request data
-            $request->validate([
+            $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
                 'phn_no' => 'required|string|max:15',
                 'speciality_id' => 'required|integer',
                 'area_id' => 'required|integer',
-                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'longitude.*' => 'required|numeric',
-                'latitude.*' => 'required|numeric',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'longitude.*' => 'required',
+                'latitude.*' => 'required',
                 'title.*' => 'required|string|max:255',
                 'addresses.*' => 'required|string|max:255',
             ]);
-
-            $doctor = new Doctor();
 
             // Handle the image upload if there is one
             if ($request->hasFile('image')) {
                 $destinationPath = 'public/images/doctors';
                 $imageName = time() . '.' . $request->image->extension();
                 $request->image->storeAs($destinationPath, $imageName);
-                $doctor->image = $imageName;
+                $validatedData['image'] = $imageName;
             }
 
-            // Store the doctor information
-            $doctor->name = $request->name;
-            $doctor->email = $request->email;
-            $doctor->phn_no = $request->phn_no;
-            $doctor->speciality_id = $request->speciality_id;
-            $doctor->area_id = $request->area_id;
+            // Save the doctor information
+            $doctor = Doctor::create($validatedData);
 
-            // Save JSON-encoded arrays
-            $doctor->longitude =  json_encode($request->longitude);
-            $doctor->latitude = json_encode($request->latitude);
-            $doctor->title = json_encode($request->title);
-            $doctor->addresses = json_encode($request->addresses);
-
-            $doctor->save();
-
-            return redirect()->route('doctor.create')->with('success', 'Doctor added successfully');
+            return redirect()->route('doctor.index')->with('success', 'Doctor added successfully');
         } catch (\Illuminate\Validation\ValidationException $e) {
-
-            return redirect()->back()->withErrors($e->validator->errors())->with('error', 'Some Error Occured Please Try Again !!')->withInput();
+            return redirect()->back()->withErrors($e->validator->errors())->with('error', 'Validation error occurred. Please try again!')->withInput();
         } catch (\Exception $e) {
-
-            return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request please try again later !!');
+            return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request. Please try again later.');
         }
     }
+
 
     /**
      * Display the specified resource.
@@ -144,8 +130,58 @@ class DoctorController extends Controller
      */
     public function update(Request $request, Doctor $doctor)
     {
-        dd(1);
+        try {
+            // Validate the request data
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'phn_no' => 'required|string|max:15',
+                'speciality_id' => 'required',
+                'area_id' => 'required',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'longitude.*' => 'required',
+                'latitude.*' => 'required',
+                'title.*' => 'required|string|max:255',
+                'addresses.*' => 'required|string|max:255',
+            ]);
+
+            // Handle the image updation
+            if ($request->hasFile('image')) {
+                $destinationPath = 'public/images/doctors/';
+                $existingImagePath = $destinationPath . $doctor->image;
+
+                if (Storage::exists($existingImagePath)) {
+                    Storage::delete($existingImagePath);
+                }
+
+                $imageName = time() . '.' . $request->image->extension();
+                $request->image->storeAs($destinationPath, $imageName);
+                $doctor->image = $imageName;
+            }
+
+            // Update the doctor information
+            $doctor->name = $request->name;
+            $doctor->email = $request->email;
+            $doctor->phn_no = $request->phn_no;
+            $doctor->speciality_id = $request->speciality_id;
+            $doctor->area_id = $request->area_id;
+
+            // Assuming longitude, latitude, title, and addresses are JSON columns
+            $doctor->longitude = $request->longitude;
+            $doctor->latitude = $request->latitude;
+            $doctor->title = $request->title;
+            $doctor->addresses = $request->addresses;
+
+            $doctor->save();
+
+            return redirect()->route('doctor.index')->with('success', 'Doctor updated successfully');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator->errors())->with('error', 'Validation Error occurred. Please try again!')->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request. Please try again later.');
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.

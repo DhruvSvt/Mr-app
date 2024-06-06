@@ -37,7 +37,7 @@
                                         <span>No image found!</span>
                                     @endif
                                 </td>
-                                <td>{{ $doctor->name ?? '-' }}</td>
+                                <td>Dr. {{ $doctor->name ?? '-' }}</td>
                                 <td>{{ $doctor->email ?? '-' }}</td>
                                 <td>{{ $doctor->phn_no ?? '-' }}</td>
                                 <td>{{ $doctor->speciality->name ?? '-' }}</td>
