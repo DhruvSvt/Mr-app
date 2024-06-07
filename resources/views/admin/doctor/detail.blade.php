@@ -16,7 +16,7 @@
 
             <div class="border-top"></div>
             <div class="container mt-24">
-                <div class="row col-12">
+                <div class="row col-12 border-bottom">
                     <div class="col-lg-6 col-md-6 col-sm-12 mt-2 ">
                         <div class="mt-3">
                             <h5><b>Name</b> : {{ $doctor->name }}</h5>
