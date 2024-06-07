@@ -75,7 +75,7 @@ class DoctorController extends Controller
             }
 
             // Save the doctor information
-            $doctor = Doctor::create($validatedData);
+            Doctor::create($validatedData);
 
             return redirect()->route('doctor.index')->with('success', 'Doctor added successfully');
         } catch (\Illuminate\Validation\ValidationException $e) {

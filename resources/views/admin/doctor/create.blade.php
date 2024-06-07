@@ -61,7 +61,7 @@
                                             <p class="text-danger text-sm">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                    <div class="col-md-12 customarea0">
+                                    <div class="col-md-12 border-bottom mb-2 customarea0">
                                         <div class="row">
                                             <div class="col-md-3 form-group mb-3">
                                                 <label for="longitude">Longitude</label>
@@ -133,7 +133,7 @@
             var k = 1;
             $(document).ready(function() {
                 $('#addcustom_area').click(function() {
-                    $('#custom_area_container').append(`<div class="col-md-12 customarea` + k +
+                    $('#custom_area_container').append(`<div class="col-md-12 border-bottom mb-2 customarea` + k +
                         `">
                             <div class="row">
                                 <div class="col-md-3 form-group mb-3 ">
