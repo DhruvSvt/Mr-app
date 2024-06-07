@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
-use App\Models\Doctor;
+use App\Models\Chemist;
 use App\Models\Speciality;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class DoctorController extends Controller
+class ChemistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +18,8 @@ class DoctorController extends Controller
     public function index()
     {
         try {
-            $doctors = Doctor::all();
-            return view('admin.doctor.doctor', compact('doctors'));
+            $chemists = Chemist::all();
+            return view('admin.chemist.chemist', compact('chemists'));
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request please try again later !!');
         }
@@ -35,7 +35,7 @@ class DoctorController extends Controller
         try {
             $specialities = Speciality::whereStatus(true)->get();
             $areas = Area::whereStatus(true)->get();
-            return view('admin.doctor.create', compact('specialities', 'areas'));
+            return view('admin.chemist.create', compact('specialities', 'areas'));
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request please try again later !!');
         }
@@ -56,6 +56,7 @@ class DoctorController extends Controller
                 'email' => 'required|email|max:255',
                 'speciality_id' => 'required|integer',
                 'area_id' => 'required|integer',
+                'contact_person' => 'required|string|max:255',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
                 'longitude.*' => 'required',
                 'latitude.*' => 'required',
@@ -66,16 +67,16 @@ class DoctorController extends Controller
 
             // Handle the image upload if there is one
             if ($request->hasFile('image')) {
-                $destinationPath = 'public/images/doctors';
+                $destinationPath = 'public/images/chemists';
                 $imageName = time() . '.' . $request->image->extension();
                 $request->image->storeAs($destinationPath, $imageName);
                 $validatedData['image'] = $imageName;
             }
 
-            // Save the doctor information
-            Doctor::create($validatedData);
+            // Save the chemist information
+            Chemist::create($validatedData);
 
-            return redirect()->route('doctor.index')->with('success', 'Doctor added successfully');
+            return redirect()->route('chemist.index')->with('success', 'Chemist added successfully');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->validator->errors())->with('error', 'Validation error occurred. Please try again!')->withInput();
         } catch (\Exception $e) {
@@ -83,18 +84,17 @@ class DoctorController extends Controller
         }
     }
 
-
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Doctor  $doctor
+     * @param  \App\Models\Chemist  $chemist
      * @return \Illuminate\Http\Response
      */
-    public function show(Doctor $doctor)
+    public function show(Chemist $chemist)
     {
         try {
-            $doctor = Doctor::findOrFail($doctor->id);
-            return view('admin.doctor.detail', compact('doctor'));
+            $chemist = Chemist::findOrFail($chemist->id);
+            return view('admin.chemist.detail', compact('chemist'));
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request please try again later !!');
@@ -104,16 +104,16 @@ class DoctorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Doctor  $doctor
+     * @param  \App\Models\Chemist  $chemist
      * @return \Illuminate\Http\Response
      */
-    public function edit(Doctor $doctor)
+    public function edit(Chemist $chemist)
     {
         try {
-            $doctor = Doctor::findOrFail($doctor->id);
+            $chemist = Chemist::findOrFail($chemist->id);
             $specialities = Speciality::whereStatus(true)->get();
             $areas = Area::whereStatus(true)->get();
-            return view('admin.doctor.edit', compact('doctor', 'specialities', 'areas'));
+            return view('admin.chemist.edit', compact('chemist', 'specialities', 'areas'));
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request please try again later !!');
         }
@@ -123,10 +123,10 @@ class DoctorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Doctor  $doctor
+     * @param  \App\Models\Chemist  $chemist
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Doctor $doctor)
+    public function update(Request $request, Chemist $chemist)
     {
         try {
             // Validate the request data
@@ -135,6 +135,7 @@ class DoctorController extends Controller
                 'email' => 'required|email|max:255',
                 'speciality_id' => 'required',
                 'area_id' => 'required',
+                'contact_person' => 'required|string|max:255',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
                 'longitude.*' => 'required',
                 'latitude.*' => 'required',
@@ -145,8 +146,8 @@ class DoctorController extends Controller
 
             // Handle the image updation
             if ($request->hasFile('image')) {
-                $destinationPath = 'public/images/doctors/';
-                $existingImagePath = $destinationPath . $doctor->image;
+                $destinationPath = 'public/images/chemists/';
+                $existingImagePath = $destinationPath . $chemist->image;
 
                 if (Storage::exists($existingImagePath)) {
                     Storage::delete($existingImagePath);
@@ -154,23 +155,24 @@ class DoctorController extends Controller
 
                 $imageName = time() . '.' . $request->image->extension();
                 $request->image->storeAs($destinationPath, $imageName);
-                $doctor->image = $imageName;
+                $chemist->image = $imageName;
             }
 
-            // Update the doctor information
-            $doctor->name = $request->name;
-            $doctor->email = $request->email;
-            $doctor->phn_no = $request->phn_no;
-            $doctor->speciality_id = $request->speciality_id;
-            $doctor->area_id = $request->area_id;
-            $doctor->longitude = $request->longitude;
-            $doctor->latitude = $request->latitude;
-            $doctor->title = $request->title;
-            $doctor->addresses = $request->addresses;
+            // Update the chemist information
+            $chemist->name = $request->name;
+            $chemist->email = $request->email;
+            $chemist->speciality_id = $request->speciality_id;
+            $chemist->area_id = $request->area_id;
+            $chemist->contact_person = $request->contact_person;
+            $chemist->phn_no = $request->phn_no;
+            $chemist->longitude = $request->longitude;
+            $chemist->latitude = $request->latitude;
+            $chemist->title = $request->title;
+            $chemist->addresses = $request->addresses;
 
-            $doctor->save();
+            $chemist->save();
 
-            return redirect()->route('doctor.index')->with('success', 'Doctor updated successfully');
+            return redirect()->route('chemist.index')->with('success', 'Chemist updated successfully');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->validator->errors())->with('error', 'Validation Error occurred. Please try again!')->withInput();
         } catch (\Exception $e) {
@@ -178,14 +180,13 @@ class DoctorController extends Controller
         }
     }
 
-
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Doctor  $doctor
+     * @param  \App\Models\Chemist  $chemist
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Doctor $doctor)
+    public function destroy(Chemist $chemist)
     {
         //
     }

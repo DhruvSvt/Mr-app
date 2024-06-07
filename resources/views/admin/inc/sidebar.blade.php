@@ -17,8 +17,15 @@
             </li>
             <li class="nav-item " data-item="doctor">
                 <a class="nav-item-hold" href="#">
-                    <i class="nav-icon i-Doctor"></i>
+                    <i class="nav-icon i-Stethoscope"></i>
                     <span class="nav-text">Doctors</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
+            <li class="nav-item " data-item="chemist">
+                <a class="nav-item-hold" href="#">
+                    <i class="nav-icon i-Doctor"></i>
+                    <span class="nav-text">Chemists</span>
                 </a>
                 <div class="triangle"></div>
             </li>
@@ -77,6 +84,20 @@
                 <a class="" href="{{ route('doctor.index') }}">
                     <i class="nav-icon i-Stethoscope"></i>
                     <span class="item-name">Doctor Details</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="childNav" data-parent="chemist">
+            <li class="nav-item ">
+                <a class="" href="{{ route('chemist.create') }}">
+                    <i class="nav-icon i-Medicine-2"></i>
+                    <span class="item-name">Create Chemist</span>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="" href="{{ route('chemist.index') }}">
+                    <i class="nav-icon i-Shop"></i>
+                    <span class="item-name">Chemist Details</span>
                 </a>
             </li>
         </ul>
