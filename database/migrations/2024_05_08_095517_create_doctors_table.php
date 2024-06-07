@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('email')->nullable();
-            $table->string('phn_no')->nullable();
+            $table->json('phn_no')->nullable();
             $table->string('image')->nullable();
             $table->string('speciality_id')->nullable();
             $table->string('area_id')->nullable();

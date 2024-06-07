@@ -25,9 +25,6 @@
                             <h5><b>Email</b> : {{ $doctor->email }}</h5>
                         </div>
                         <div class="mt-3">
-                            <h5><b>Phone</b> : {{ $doctor->phn_no }}</h5>
-                        </div>
-                        <div class="mt-3">
                             <h5><b>Speciality Name</b> : {{ $doctor->speciality->name ?? '-' }}</h5>
                         </div>
                         <div class="mt-3">
@@ -48,10 +45,13 @@
                     <div class="row col-12 mt-3 border-bottom">
                         <div class="col-6">
                             <div>
-                                <h5><strong>Title</strong> : {{ $doctor->title[$key] }}</h5>
+                                <h5><strong>Title</strong> : {{ $doctor->title[$key] ?? '-' }}</h5>
                             </div>
                             <div>
-                                <h5><strong>Address</strong> : {{ $doctor->addresses[$key] }}</h5>
+                                <h5><strong>Address</strong> : {{ $doctor->addresses[$key] ?? '-' }}</h5>
+                            </div>
+                            <div>
+                                <h5><strong>Phone No</strong> : {{ $doctor->phn_no[$key] ?? '-' }}</h5>
                             </div>
                         </div>
                         <div class="col-6 ">

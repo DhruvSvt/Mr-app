@@ -10,7 +10,7 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="card-title mb-3">Create</div>
-                            <form action="{{ route('doctor.store') }}" method="POST" enctype="multipart/form-data" >
+                            <form action="{{ route('doctor.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6 form-group mb-3">
@@ -31,19 +31,11 @@
                                     </div>
 
                                     <div class="col-md-6 form-group mb-3">
-                                        <label for="phone">Phone</label>
-                                        <input class="form-control" id="phone" placeholder="Enter phone" name="phn_no">
-                                        @error('phn_no')
-                                            <p class="text-danger text-sm">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-md-6 form-group mb-3">
                                         <label for="speciality_id">Select Speciality Name</label>
                                         <select class="form-control" name="speciality_id">
                                             <option value="0" selected disabled>Choose Speciality</option>
                                             @foreach ($specialities as $speciality)
-                                                <option value="{{ $speciality->id }}" >{{ $speciality->name }}</option>
+                                                <option value="{{ $speciality->id }}">{{ $speciality->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('speciality_id')
@@ -54,15 +46,15 @@
                                         <label for="picker1">Select Area Name</label>
                                         <select class="form-control" name="area_id">
                                             <option value="0" selected disabled>Choose Area</option>
-                                            @foreach ($areas as $area )
-                                            <option value="{{ $area->id }}" >{{ $area->area_name }}</option>
+                                            @foreach ($areas as $area)
+                                                <option value="{{ $area->id }}">{{ $area->area_name }}</option>
                                             @endforeach
                                         </select>
                                         @error('area_id')
                                             <p class="text-danger text-sm">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6 form-group mb-3">
+                                    <div class="col-md-12 form-group mb-3">
                                         <label for="location">Choose Photo</label>
                                         <input type="file" name="image" class="form-control">
                                         @error('image')
@@ -71,24 +63,23 @@
                                     </div>
                                     <div class="col-md-12 customarea0">
                                         <div class="row">
-                                            <div class="col-md-2 form-group mb-3 ">
+                                            <div class="col-md-3 form-group mb-3">
                                                 <label for="longitude">Longitude</label>
                                                 <input type="text" class="form-control"
-                                                    placeholder="Enter your Longitude"  min="0"
-                                                    name="longitude[]">
+                                                    placeholder="Enter your Longitude" min="0" name="longitude[]">
                                                 @error('longitude[]')
                                                     <p class="text-danger text-sm">{{ $message }}</p>
                                                 @enderror
                                             </div>
-                                            <div class="col-md-2 form-group mb-3 ">
+                                            <div class="col-md-3 form-group mb-3 ">
                                                 <label for="location">Latitude</label>
                                                 <input type="text" class="form-control" placeholder="Enter your Latitude"
-                                                     min="0" name="latitude[]">
+                                                    min="0" name="latitude[]">
                                                 @error('latitude[]')
                                                     <p class="text-danger text-sm">{{ $message }}</p>
                                                 @enderror
                                             </div>
-                                            <div class="col-md-3 form-group mb-3 ">
+                                            <div class="col-md-4 form-group mb-3 ">
                                                 <label for="location">Title</label>
                                                 <input type="text" class="form-control" placeholder="Enter title"
                                                     name="title[]">
@@ -96,7 +87,12 @@
                                                     <p class="text-danger text-sm">{{ $message }}</p>
                                                 @enderror
                                             </div>
-                                            <div class="col-md-3 form-group mb-3">
+
+                                            <div class="col-md-2 my-auto">
+                                                <button type="button" id="addcustom_area"
+                                                    class="btn btn-warning float-right">+</button>
+                                            </div>
+                                            <div class="col-md-5 form-group mb-3">
                                                 <label for="address">Address</label>
                                                 <input type="text" class="form-control" placeholder="Enter the Address"
                                                     name="addresses[]">
@@ -104,10 +100,13 @@
                                                     <p class="text-danger text-sm">{{ $message }}</p>
                                                 @enderror
                                             </div>
-
-                                            <div class="col-md-2 my-auto">
-                                                <button type="button" id="addcustom_area"
-                                                    class="btn btn-warning float-right">+</button>
+                                            <div class="col-md-5 form-group mb-3">
+                                                <label for="phone">Phone</label>
+                                                <input class="form-control" id="phone" placeholder="Enter phone"
+                                                    name="phn_no[]">
+                                                @error('phn_no[]')
+                                                    <p class="text-danger text-sm">{{ $message }}</p>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -137,7 +136,7 @@
                     $('#custom_area_container').append(`<div class="col-md-12 customarea` + k +
                         `">
                             <div class="row">
-                                <div class="col-md-2 form-group mb-3 ">
+                                <div class="col-md-3 form-group mb-3 ">
                                     <label for="longitude">Longitude</label>
                                     <input type="text" class="form-control"
                                         placeholder="Enter your Longitude"  min="0"
@@ -146,7 +145,7 @@
                                         <p class="text-danger text-sm">{{ $message }}</p>
                                     @enderror
                                 </div>
-                                <div class="col-md-2 form-group mb-3 ">
+                                <div class="col-md-3 form-group mb-3 ">
                                     <label for="location">Latitude</label>
                                     <input type="text" class="form-control" placeholder="Enter your Latitude"
                                          min="0" name="latitude[]">
@@ -154,7 +153,7 @@
                                         <p class="text-danger text-sm">{{ $message }}</p>
                                     @enderror
                                 </div>
-                                <div class="col-md-3 form-group mb-3 ">
+                                <div class="col-md-4 form-group mb-3 ">
                                     <label for="location">Title</label>
                                     <input type="text" class="form-control" placeholder="Enter title"
                                         name="title[]">
@@ -162,7 +161,11 @@
                                         <p class="text-danger text-sm">{{ $message }}</p>
                                     @enderror
                                 </div>
-                                <div class="col-md-3 form-group mb-3">
+                                <div class="col-md-2 my-auto">
+                                    <button type="button" class="btn btn-danger btn_remove_area float-right" data-id="` +
+                                    k + `">X</button>
+                                </div>
+                                <div class="col-md-5 form-group mb-3">
                                     <label for="address">Address</label>
                                     <input type="text" class="form-control" placeholder="Enter the Address"
                                         name="addresses[]">
@@ -170,9 +173,13 @@
                                         <p class="text-danger text-sm">{{ $message }}</p>
                                     @enderror
                                 </div>
-                                <div class="col-md-2 my-auto">
-                                    <button type="button" class="btn btn-danger btn_remove_area float-right" data-id="` +
-                        k + `">X</button>
+                                 <div class="col-md-5 form-group mb-3">
+                                    <label for="phone">Phone</label>
+                                    <input class="form-control" id="phone" placeholder="Enter phone"
+                                        name="phn_no[]">
+                                    @error('phn_no[]')
+                                        <p class="text-danger text-sm">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
                         </div>`);

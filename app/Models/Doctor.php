@@ -19,6 +19,7 @@ class Doctor extends Model
         'latitude' => 'array',
         'title' => 'array',
         'addresses' => 'array',
+        'phn_no' => 'array',
     ];
 
     public function speciality(){

@@ -56,7 +56,6 @@ class DoctorController extends Controller
             $validatedData = $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
-                'phn_no' => 'required|string|max:15',
                 'speciality_id' => 'required|integer',
                 'area_id' => 'required|integer',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
@@ -64,6 +63,7 @@ class DoctorController extends Controller
                 'latitude.*' => 'required',
                 'title.*' => 'required|string|max:255',
                 'addresses.*' => 'required|string|max:255',
+                'phn_no.*' => 'required|string|max:15',
             ]);
 
             // Handle the image upload if there is one
@@ -135,7 +135,6 @@ class DoctorController extends Controller
             $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
-                'phn_no' => 'required|string|max:15',
                 'speciality_id' => 'required',
                 'area_id' => 'required',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
@@ -143,6 +142,7 @@ class DoctorController extends Controller
                 'latitude.*' => 'required',
                 'title.*' => 'required|string|max:255',
                 'addresses.*' => 'required|string|max:255',
+                'phn_no.*' => 'required|string|max:15',
             ]);
 
             // Handle the image updation

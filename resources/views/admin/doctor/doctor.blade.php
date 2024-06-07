@@ -17,7 +17,6 @@
                             <th scope="col">Image</th>
                             <th scope="col">Doctor Name</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Phone No.</th>
                             <th scope="col">Speciality</th>
                             <th scope="col">Area</th>
                             <th scope="col">View More</th>
@@ -39,7 +38,6 @@
                                 </td>
                                 <td>Dr. {{ $doctor->name ?? '-' }}</td>
                                 <td>{{ $doctor->email ?? '-' }}</td>
-                                <td>{{ $doctor->phn_no ?? '-' }}</td>
                                 <td>{{ $doctor->speciality->name ?? '-' }}</td>
                                 <td>{{ $doctor->area->area_name ?? '-' }}</td>
                                 <td><a href="{{ route('doctor.show', $doctor->id) }}" class="btn btn-success">View More</a>

@@ -40,16 +40,6 @@
                                             <p class="text-danger text-sm">{{ $message }}</p>
                                         @enderror
                                     </div>
-
-                                    <div class="col-md-6 form-group mb-3">
-                                        <label for="phone">Phone</label>
-                                        <input class="form-control" id="phone" placeholder="Enter phone" name="phn_no"
-                                            value="{{ $doctor->phn_no }}">
-                                        @error('phn_no')
-                                            <p class="text-danger text-sm">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-
                                     <div class="col-md-6 form-group mb-3">
                                         <label for="speciality_id">Select Speciality Name</label>
                                         <select class="form-control" name="speciality_id">
@@ -75,7 +65,7 @@
                                             <p class="text-danger text-sm">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6 form-group mb-3">
+                                    <div class="col-md-12 form-group mb-3">
                                         @if ($doctor->image)
                                             <img class="my-2"
                                                 src="{{ asset('storage/images/doctors/' . $doctor->image) }}"
@@ -95,7 +85,7 @@
                                     <div class="col-md-12 customarea0">
                                         @foreach ($longitudes as $key => $item)
                                             <div class="row customarea{{ $key }}">
-                                                <div class="col-md-2 form-group mb-3">
+                                                <div class="col-md-3 form-group mb-3">
                                                     <label for="longitude">Longitude</label>
                                                     <input type="text" class="form-control"
                                                         placeholder="Enter your Longitude" min="0" name="longitude[]"
@@ -104,7 +94,7 @@
                                                         <p class="text-danger text-sm">{{ $message }}</p>
                                                     @enderror
                                                 </div>
-                                                <div class="col-md-2 form-group mb-3">
+                                                <div class="col-md-3 form-group mb-3">
                                                     <label for="location">Latitude</label>
                                                     <input type="text" class="form-control"
                                                         placeholder="Enter your Latitude" min="0" name="latitude[]"
@@ -113,7 +103,7 @@
                                                         <p class="text-danger text-sm">{{ $message }}</p>
                                                     @enderror
                                                 </div>
-                                                <div class="col-md-3 form-group mb-3">
+                                                <div class="col-md-4 form-group mb-3">
                                                     <label for="location">Title</label>
                                                     <input type="text" class="form-control" placeholder="Enter title"
                                                         name="title[]" value="{{ $doctor->title[$key] }}">
@@ -121,16 +111,6 @@
                                                         <p class="text-danger text-sm">{{ $message }}</p>
                                                     @enderror
                                                 </div>
-                                                <div class="col-md-3 form-group mb-3">
-                                                    <label for="address">Address</label>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Enter the Address" name="addresses[]"
-                                                        value="{{ $doctor->addresses[$key] }}">
-                                                    @error('addresses[]')
-                                                        <p class="text-danger text-sm">{{ $message }}</p>
-                                                    @enderror
-                                                </div>
-
                                                 @if ($loop->first)
                                                     <div class="col-md-2 my-auto">
                                                         <button type="button" id="addcustom_area"
@@ -143,6 +123,23 @@
                                                             data-id="{{ $key }}">X</button>
                                                     </div>
                                                 @endif
+                                                <div class="col-md-5 form-group mb-3">
+                                                    <label for="address">Address</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="Enter the Address" name="addresses[]"
+                                                        value="{{ $doctor->addresses[$key] }}">
+                                                    @error('addresses[]')
+                                                        <p class="text-danger text-sm">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
+                                                <div class="col-md-5 form-group mb-3">
+                                                    <label for="phone">Phone</label>
+                                                    <input class="form-control" id="phone" placeholder="Enter phone"
+                                                        name="phn_no[]" value="{{ $doctor->phn_no[$key] ?? '' }}">
+                                                    @error('phn_no[]')
+                                                        <p class="text-danger text-sm">{{ $message }}</p>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         @endforeach
                                     </div>
@@ -173,36 +170,44 @@
                 $('#addcustom_area').click(function() {
                     $('#custom_area_container').append(`<div class="col-md-12 customarea` + k + `">
                     <div class="row">
-                        <div class="col-md-2 form-group mb-3">
+                        <div class="col-md-3 form-group mb-3">
                             <label for="longitude">Longitude</label>
                             <input type="text" class="form-control" placeholder="Enter your Longitude" min="0" name="longitude[]">
                             @error('longitude[]')
                                 <p class="text-danger text-sm">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div class="col-md-2 form-group mb-3">
+                        <div class="col-md-3 form-group mb-3">
                             <label for="location">Latitude</label>
                             <input type="text" class="form-control" placeholder="Enter your Latitude" min="0" name="latitude[]">
                             @error('latitude[]')
                                 <p class="text-danger text-sm">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div class="col-md-3 form-group mb-3">
+                        <div class="col-md-4 form-group mb-3">
                             <label for="location">Title</label>
                             <input type="text" class="form-control" placeholder="Enter title" name="title[]">
                             @error('title[]')
                                 <p class="text-danger text-sm">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div class="col-md-3 form-group mb-3">
+                         <div class="col-md-2 my-auto">
+                            <button type="button" class="btn btn-danger btn_remove_area float-right" data-id="` + k + `">X</button>
+                        </div>
+                        <div class="col-md-5 form-group mb-3">
                             <label for="address">Address</label>
                             <input type="text" class="form-control" placeholder="Enter the Address" name="addresses[]">
                             @error('addresses[]')
                                 <p class="text-danger text-sm">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div class="col-md-2 my-auto">
-                            <button type="button" class="btn btn-danger btn_remove_area float-right" data-id="` + k + `">X</button>
+                        <div class="col-md-5 form-group mb-3">
+                            <label for="phone">Phone</label>
+                            <input class="form-control" id="phone" placeholder="Enter phone"
+                                name="phn_no[]">
+                            @error('phn_no[]')
+                                <p class="text-danger text-sm">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
                 </div>`);
