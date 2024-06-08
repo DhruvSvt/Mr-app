@@ -49,8 +49,25 @@
             </div>
             <!-- ============= Create Modal End ============= -->
 
+            {{-- <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-8">
+                            <form action="">
+                                <label for="searcch"></label>
+                                <input type="text" class="form-control" placeholder="Enter Keywords for Search"
+                                    name="search">
+                                <button class="btn btn-warning"></button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div> --}}
+
             <!-- ============= Table Start ============= -->
             <div class="table-responsive">
+                @include('admin.inc.search')
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -99,7 +116,8 @@
                                                         @csrf
                                                         @method('PUT')
                                                         <div class="form-group">
-                                                            <label for="city_name" class="col-form-label">City Name</label>
+                                                            <label for="city_name" class="col-form-label">City
+                                                                Name</label>
                                                             <input type="text" class="form-control" name="city_name"
                                                                 required>
                                                             @error('city_name')
@@ -126,11 +144,32 @@
                             </tr>
                         @empty
                             <td colspan="5" class="text-center">
-                                <h3 class="font-weight-600" >No Data Found !!</h3>
+                                <h3 class="font-weight-600">No Data Found !!</h3>
                             </td>
                         @endforelse
                     </tbody>
                 </table>
+                <nav aria-label="Page navigation example">
+
+                    <ul class="pagination float-left">
+                        Showing {{ $cities->firstItem() }} to
+                        {{ $cities->lastItem() }} of
+                        {{ $cities->total() }} entries
+                    </ul>
+                    <ul class="pagination float-right">
+                        <li class="page-item">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <!-- ============= Table End ============= -->
 

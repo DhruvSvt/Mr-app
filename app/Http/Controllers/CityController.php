@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class CityController extends Controller
 {
@@ -16,7 +17,28 @@ class CityController extends Controller
     public function index()
     {
         try {
-            $cities = City::latest()->get();
+
+            /* Query Parameters */
+            $keyword = request()->keyword;
+            $rows = request()->rows ?? 2;
+            if ($rows == 'all') {
+                $rows = City::all();
+            }
+
+            // Get the table columns
+            $cityAllColumns = Schema::getColumnListing((new City())->getTable());
+
+            $cities = City::when(isset($keyword), function ($query) use ($keyword, $cityAllColumns) {
+                $query->where(function ($query) use ($keyword, $cityAllColumns) {
+                    // Dynamically construct the search query
+                    foreach ($cityAllColumns as $column) {
+                        $query->orwhere($column, 'LIKE', "%$keyword%");
+                    }
+                });
+            })
+                ->latest()
+                ->paginate($rows);
+
             return view('admin.city.city', compact('cities'));
         } catch (\Exception $e) {
 
