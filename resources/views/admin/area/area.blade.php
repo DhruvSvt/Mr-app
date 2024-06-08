@@ -165,7 +165,7 @@
 
         </div>
 
-        @include('admin.inc.footer');
+        @include('admin.inc.footer')<br>
     </div>
 @endsection
 
