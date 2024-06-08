@@ -9,14 +9,11 @@ class StatusController extends Controller
     public function statusUpdate(Request $request)
     {
         try {
-            $modelName = 'App\Models\\' . $request->model;
+            $modelName = "App\Models\\" . $request->model;
 
-            $model = new $modelName;
-
-            $update = $model->findOrFail($request->var_id);
-
-            $update->status = $request->status;
-            $update->save();
+            $model = app($modelName)->findOrFail($request->var_id);
+            $model->status = $request->status;
+            $model->save();
 
             $message = $request->status == 1 ? 'Successfully Status ON !!' : 'Successfully Status OFF !!';
             $status = $request->status == 1 ? 'on' : 'off';
