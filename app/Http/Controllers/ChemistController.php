@@ -6,6 +6,7 @@ use App\Models\Area;
 use App\Models\Chemist;
 use App\Models\Speciality;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 
 class ChemistController extends Controller
@@ -18,8 +19,47 @@ class ChemistController extends Controller
     public function index()
     {
         try {
-            $chemists = Chemist::all();
-            return view('admin.chemist.chemist', compact('chemists'));
+            /* Query Parameters */
+            $keyword = request()->keyword;
+            $rows = request()->rows ?? 25;
+            if ($rows == 'all') {
+                $rows = Chemist::count();
+            }
+            // Get the table columns
+            $chemistAllColumns = Schema::getColumnListing((new Chemist())->getTable());
+            $areaAllColumns = Schema::getColumnListing((new Area())->getTable());
+            $specialityAllColumns = Schema::getColumnListing((new Speciality())->getTable());
+
+            $chemists = Chemist::with('speciality', 'area')
+                ->when(isset($keyword), function ($query) use ($keyword, $chemistAllColumns, $areaAllColumns, $specialityAllColumns) {
+                    /* Searching in Chemist table */
+                    $query->where(function ($query) use ($keyword, $chemistAllColumns) {
+                        // Dynamically construct the search query
+                        foreach ($chemistAllColumns as $column) {
+                            $query->orWhere($column, 'LIKE', "%$keyword%");
+                        }
+                    });
+                    /* Searching in Speciality table */
+                    $query->orWhereHas('speciality', function ($query) use ($keyword, $specialityAllColumns) {
+                        $query->where(function ($query) use ($keyword, $specialityAllColumns) {
+                            foreach ($specialityAllColumns as $column) {
+                                $query->orWhere($column, 'LIKE', "%$keyword%");
+                            }
+                        });
+                    });
+                    /* Searching in Area table */
+                    $query->orWhereHas('area', function ($query) use ($keyword, $areaAllColumns) {
+                        $query->where(function ($query) use ($keyword, $areaAllColumns) {
+                            foreach ($areaAllColumns as $column) {
+                                $query->orWhere($column, 'LIKE', "%$keyword%");
+                            }
+                        });
+                    });
+                })
+                ->latest()
+                ->paginate($rows);
+
+            return view('admin.chemist.chemist', compact('chemists', 'keyword', 'rows'));
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request please try again later !!');
         }
