@@ -1,6 +1,6 @@
 <div class="main-header">
     <div class="logo">
-        <img src="{{ config('app.url') }}/assets/images/logo.png" alt="">
+        <img src="{{ config('app.url') }}/assets/images/mrlogo.png" alt="">
     </div>
 
     <div class="menu-toggle">
@@ -17,7 +17,7 @@
         <!-- Full screen toggle -->
         <i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen></i>
         <!-- Notificaiton -->
-        <div class="dropdown">
+        {{-- <div class="dropdown">
             <div class="badge-top-container" role="button" id="dropdownNotification" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <span class="badge badge-primary">3</span>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- Notificaiton End -->
 
         <!-- User avatar dropdown -->
@@ -96,9 +96,6 @@
                     <div class="dropdown-header">
                         <i class="i-Lock-User mr-1"></i> {{ Auth::user()->name }}
                     </div>
-                    <a class="dropdown-item">Account settings</a>
-                    <a class="dropdown-item">Billing history</a>
-                    {{-- <a class="dropdown-item" href="{{ route('logout') }}"></a> --}}
 
                     <a class="dropdown-item" href="{{ route('logout') }}"
                     onclick="event.preventDefault();

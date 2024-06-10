@@ -7,7 +7,7 @@
             target="_blank">Designed & Developed By SVT INDIA</a>
         <span class="flex-grow-1"></span>
         <div class="d-flex align-items-center">
-            <img class="logo" src="assets/images/logo.png" alt="">
+            <img class="logo" src="assets/images/mrlogo.png" alt="">
             <div>
                 <p class="m-0">All rights reserved</p>
             </div>

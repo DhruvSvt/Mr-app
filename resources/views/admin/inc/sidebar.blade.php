@@ -29,13 +29,13 @@
                 </a>
                 <div class="triangle"></div>
             </li>
-            <li class="nav-item " data-item="dashboard">
+            {{-- <li class="nav-item " data-item="dashboard">
                 <a class="nav-item-hold" href="#">
                     <i class="nav-icon i-Bar-Chart"></i>
                     <span class="nav-text">Dashboard</span>
                 </a>
                 <div class="triangle"></div>
-            </li>
+            </li> --}}
         </ul>
     </div>
 
@@ -101,7 +101,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="childNav" data-parent="dashboard">
+        {{-- <ul class="childNav" data-parent="dashboard">
             <li class="nav-item ">
                 <a class="" href="dashboard/dashboard1.html">
                     <i class="nav-icon i-Clock-3"></i>
@@ -126,7 +126,7 @@
                     <span class="item-name">Version 4</span>
                 </a>
             </li>
-        </ul>
+        </ul> --}}
     </div>
     <div class="sidebar-overlay"></div>
 </div>
