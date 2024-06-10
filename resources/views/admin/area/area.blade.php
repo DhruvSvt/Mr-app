@@ -63,6 +63,7 @@
 
             <!-- ============= Table Start ============= -->
             <div class="table-responsive">
+                @include('admin.inc.search')
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -160,6 +161,14 @@
                         @endforelse
                     </tbody>
                 </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination float-left">
+                        Showing {{ $areas->firstItem() }} to {{ $areas->lastItem() }} of {{ $areas->total() }} entries
+                    </ul>
+                    <ul class="pagination float-right">
+                        {{ $areas->appends(['keyword' => request()->keyword, 'rows' => $rows])->links() }}
+                    </ul>
+                </nav>
             </div>
             <!-- ============= Table End ============= -->
 
