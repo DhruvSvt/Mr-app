@@ -17,12 +17,11 @@ class CityController extends Controller
     public function index()
     {
         try {
-
             /* Query Parameters */
             $keyword = request()->keyword;
-            $rows = request()->rows ?? 2;
+            $rows = request()->rows ?? 25;
             if ($rows == 'all') {
-                $rows = City::all();
+                $rows = City::count();
             }
 
             // Get the table columns
@@ -39,12 +38,12 @@ class CityController extends Controller
                 ->latest()
                 ->paginate($rows);
 
-            return view('admin.city.city', compact('cities'));
+            return view('admin.city.city', compact('cities', 'keyword', 'rows'));
         } catch (\Exception $e) {
-
             return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request please try again later !!');
         }
     }
+
 
     /**
      * Show the form for creating a new resource.

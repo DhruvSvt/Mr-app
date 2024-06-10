@@ -49,22 +49,6 @@
             </div>
             <!-- ============= Create Modal End ============= -->
 
-            {{-- <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="col-md-8">
-                            <form action="">
-                                <label for="searcch"></label>
-                                <input type="text" class="form-control" placeholder="Enter Keywords for Search"
-                                    name="search">
-                                <button class="btn btn-warning"></button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-md-4"></div>
-                </div>
-            </div> --}}
-
             <!-- ============= Table Start ============= -->
             <div class="table-responsive">
                 @include('admin.inc.search')
@@ -150,24 +134,11 @@
                     </tbody>
                 </table>
                 <nav aria-label="Page navigation example">
-
                     <ul class="pagination float-left">
-                        Showing {{ $cities->firstItem() }} to
-                        {{ $cities->lastItem() }} of
-                        {{ $cities->total() }} entries
+                        Showing {{ $cities->firstItem() }} to {{ $cities->lastItem() }} of {{ $cities->total() }} entries
                     </ul>
                     <ul class="pagination float-right">
-                        <li class="page-item">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
+                        {{ $cities->appends(['keyword' => request()->keyword, 'rows' => $rows])->links() }}
                     </ul>
                 </nav>
             </div>
