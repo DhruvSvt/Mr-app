@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Speciality;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class SpecialityController extends Controller
 {
@@ -15,8 +16,29 @@ class SpecialityController extends Controller
     public function index()
     {
         try {
-            $specialities =  Speciality::latest()->get();
-            return view('admin.speciality.speciality', compact('specialities'));
+
+            /* Query Parameters */
+            $keyword = request()->keyword;
+            $rows = request()->rows ?? 25;
+            if ($rows == 'all') {
+                $rows = Speciality::count();
+            }
+
+            // Get the table columns
+            $specialityAllColumns = Schema::getColumnListing((new Speciality())->getTable());
+
+            $specialities = Speciality::when(isset($keyword), function ($query) use ($keyword, $specialityAllColumns) {
+                $query->where(function ($query) use ($keyword, $specialityAllColumns) {
+                    // Dynamically construct the search query
+                    foreach ($specialityAllColumns as $column) {
+                        $query->orwhere($column, 'LIKE', "%$keyword%");
+                    }
+                });
+            })
+                ->latest()
+                ->paginate($rows);
+
+            return view('admin.speciality.speciality', compact('specialities','keyword','rows'));
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request please try again later !!');
@@ -94,7 +116,7 @@ class SpecialityController extends Controller
      * @param  \App\Models\Speciality  $speciality
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         try {
 

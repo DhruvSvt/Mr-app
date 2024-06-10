@@ -51,6 +51,7 @@
 
             <!-- ============= Table Start ============= -->
             <div class="table-responsive">
+                @include('admin.inc.search')
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -133,6 +134,11 @@
                         @endforelse
                     </tbody>
                 </table>
+                @include('admin.inc.paginate', [
+                    'model' => $specialities,
+                    'keyword' => request()->keyword,
+                    'rows' => request()->rows,
+                ])
             </div>
             <!-- ============= Table End ============= -->
 
