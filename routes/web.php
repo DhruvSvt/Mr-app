@@ -8,6 +8,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SpecialityController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\StrengthController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,34 +27,47 @@ Route::get('/', function () {
     return view('admin.index');
 })->name('index')->middleware('auth');
 
-Route::middleware('auth')->prefix('admin')->group(function() {
+Route::middleware('auth')->prefix('admin')->group(function () {
 
     // -------------------- City Resource --------------------
-    Route::resource('city',CityController::class);
+    Route::resource('city', CityController::class);
 
     // -------------------- Area Resource --------------------
-    Route::resource('area',AreaController::class);
+    Route::resource('area', AreaController::class);
 
     // -------------------- Product Resource --------------------
-    Route::resource('product',ProductController::class);
+    Route::resource('product', ProductController::class);
 
     // -------------------- Strength Resource --------------------
-    Route::resource('strength',StrengthController::class);
+    Route::resource('strength', StrengthController::class);
 
     // -------------------- Speciality Resource --------------------
-    Route::resource('speciality',SpecialityController::class);
+    Route::resource('speciality', SpecialityController::class);
 
     // -------------------- Doctor Resource --------------------
-    Route::resource('doctor',DoctorController::class);
+    Route::resource('doctor', DoctorController::class);
 
     // -------------------- Chemist Resource --------------------
-    Route::resource('chemist',ChemistController::class);
+    Route::resource('chemist', ChemistController::class);
 
     // -------------------- Global Status Resource --------------------
-    Route::post('status',[StatusController::class,'statusUpdate'])->name('status');
+    Route::post('status', [StatusController::class, 'statusUpdate'])->name('status');
+});
+
+Route::get('migrate', function () {
+    Artisan::call('view:clear');
+    Artisan::call('route:clear');
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('migrate');
 });
 
 
+Route::get('/storagelink', function () {
+    $target = storage_path('app/public');
+    $link = public_path('/storage');
+    echo symlink($target, $link);
+    echo "symbolic link created successfully";
+});
+
 Auth::routes();
-
-
