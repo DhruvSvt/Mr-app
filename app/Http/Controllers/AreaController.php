@@ -21,7 +21,7 @@ class AreaController extends Controller
             $keyword = request()->keyword;
             $rows = request()->rows ?? 25;
             if ($rows == 'all') {
-                $rows = City::count();
+                $rows = Area::count();
             }
             // Get the table columns
             $areaAllColumns = Schema::getColumnListing((new Area())->getTable());
