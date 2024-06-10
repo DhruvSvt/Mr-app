@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Strength;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class StrengthController extends Controller
 {
@@ -15,8 +16,27 @@ class StrengthController extends Controller
     public function index()
     {
         try {
-            $strengths =  Strength::latest()->get();
-            return view('admin.strength.strength', compact('strengths'));
+            /* Query Parameters */
+            $keyword = request()->keyword;
+            $rows = request()->rows ?? 25;
+            if ($rows == 'all') {
+                $rows = Strength::count();
+            }
+
+            // Get the table columns
+            $strengthAllColumns = Schema::getColumnListing((new Strength())->getTable());
+
+            $strengths = Strength::when(isset($keyword), function ($query) use ($keyword, $strengthAllColumns) {
+                $query->where(function ($query) use ($keyword, $strengthAllColumns) {
+                    // Dynamically construct the search query
+                    foreach ($strengthAllColumns as $column) {
+                        $query->orwhere($column, 'LIKE', "%$keyword%");
+                    }
+                });
+            })
+                ->latest()
+                ->paginate($rows);
+            return view('admin.strength.strength', compact('strengths', 'keyword', 'rows'));
         } catch (\Exception $e) {
 
             return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request please try again later !!');
