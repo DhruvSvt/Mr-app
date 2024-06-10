@@ -29,31 +29,32 @@ Route::get('/', function () {
 
 Route::middleware('auth')->prefix('admin')->group(function () {
 
-    // -------------------- City Resource --------------------
+    /* -------------------- City Resource -------------------- */
     Route::resource('city', CityController::class);
 
-    // -------------------- Area Resource --------------------
+    /* -------------------- Area Resource -------------------- */
     Route::resource('area', AreaController::class);
 
-    // -------------------- Product Resource --------------------
+    /* -------------------- Product Resource -------------------- */
     Route::resource('product', ProductController::class);
 
-    // -------------------- Strength Resource --------------------
+    /* -------------------- Strength Resource -------------------- */
     Route::resource('strength', StrengthController::class);
 
-    // -------------------- Speciality Resource --------------------
+    /* -------------------- Speciality Resource -------------------- */
     Route::resource('speciality', SpecialityController::class);
 
-    // -------------------- Doctor Resource --------------------
+    /* -------------------- Doctor Resource -------------------- */
     Route::resource('doctor', DoctorController::class);
 
-    // -------------------- Chemist Resource --------------------
+    /* -------------------- Chemist Resource -------------------- */
     Route::resource('chemist', ChemistController::class);
 
-    // -------------------- Global Status Resource --------------------
+    /* -------------------- Global Status Resource -------------------- */
     Route::post('status', [StatusController::class, 'statusUpdate'])->name('status');
 });
 
+/* -------------------- Migration Command -------------------- */
 Route::get('migrate', function () {
     Artisan::call('view:clear');
     Artisan::call('route:clear');
@@ -63,6 +64,7 @@ Route::get('migrate', function () {
 });
 
 
+/* -------------------- Storage Link Command -------------------- */
 Route::get('/storagelink', function () {
     $target = storage_path('app/public');
     $link = public_path('/storage');

@@ -19,7 +19,7 @@
                     <div class="col-md-6">
                         <div class="p-4">
                             <div class="auth-logo text-center mb-4">
-                                <img src="../assets/images/logo.png" alt="">
+                                <img src="../assets/images/mrlogo.png" alt="">
                             </div>
                             <h1 class="mb-3 text-18">Sign In</h1>
                             <form method="POST" action="{{ route('login') }}">
@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 text-center "
-                        style="background-size: cover;background-image: url(https://gull-html-laravel.ui-lib.com/assets/images/photo-long-3.jpg)">
+                        style="background-size: cover;background-image: url('assets/images/login-bg.jpg')">
                         <div class="pr-3 auth-right">
                             {{-- <a class="btn btn-rounded btn-outline-primary btn-outline-email btn-block btn-icon-text"
                                 href="signup-2.html">

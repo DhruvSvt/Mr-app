@@ -3,6 +3,16 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <!-- CSRF Token -->
 <meta name="csrf-token" content="pZjdAS1GlvBal82nKVs3tKPhdRtU6q4EWEUyJBob">
+<meta name="theme-color" content="#663399">
+<meta property="og:site_name" content="MR APP ADMIN PANEL">
+
+<meta property="og:type" content="website">
+<meta property="og:image" content="{{ config('app.url') }}/assets/images/mrlogo.png">
+
+<link rel="canonical" href="https://mrapp.mdayurvediccollege.in/">
+
+<!--website-favicon-->
+<link href="{{ config('app.url') }}/assets/images/favicon.ico" rel="icon">
 <title>{{ $title ?? 'Mr-App' }} | {{ config('app.name') }}</title>
 <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet">
 
