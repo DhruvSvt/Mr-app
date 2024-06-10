@@ -133,14 +133,11 @@
                         @endforelse
                     </tbody>
                 </table>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination float-left">
-                        Showing {{ $cities->firstItem() }} to {{ $cities->lastItem() }} of {{ $cities->total() }} entries
-                    </ul>
-                    <ul class="pagination float-right">
-                        {{ $cities->appends(['keyword' => request()->keyword, 'rows' => $rows])->links() }}
-                    </ul>
-                </nav>
+                @include('admin.inc.paginate', [
+                    'model' => $cities,
+                    'keyword' => request()->keyword,
+                    'rows' => request()->rows,
+                ])
             </div>
             <!-- ============= Table End ============= -->
 
