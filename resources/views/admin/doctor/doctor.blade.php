@@ -10,6 +10,7 @@
 
             <!-- ============= Table Start ============= -->
             <div class="table-responsive">
+                @include('admin.inc.search')
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -36,7 +37,7 @@
                                         <span>No image found!</span>
                                     @endif
                                 </td>
-                                <td>Dr. {{ $doctor->name ?? '-' }}</td>
+                                <td>{{ $doctor->name ?? '-' }}</td>
                                 <td>{{ $doctor->email ?? '-' }}</td>
                                 <td>{{ $doctor->speciality->name ?? '-' }}</td>
                                 <td>{{ $doctor->area->area_name ?? '-' }}</td>
@@ -52,7 +53,7 @@
                                     </label>
                                 </td>
                                 <td>
-                                    <a href="{{ route('doctor.edit',$doctor->id) }}">
+                                    <a href="{{ route('doctor.edit', $doctor->id) }}">
                                         <button type="button" class="btn btn-warning edit-area-btn">
                                             <i class="nav-icon i-Pen-2"></i>
                                         </button>
@@ -66,6 +67,11 @@
                         @endforelse
                     </tbody>
                 </table>
+                @include('admin.inc.paginate', [
+                    'model' => $doctors,
+                    'keyword' => request()->keyword,
+                    'rows' => request()->rows,
+                ])
             </div>
             <!-- ============= Table End ============= -->
 

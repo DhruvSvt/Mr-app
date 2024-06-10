@@ -6,6 +6,7 @@ use App\Models\Area;
 use App\Models\Doctor;
 use App\Models\Speciality;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
@@ -18,8 +19,47 @@ class DoctorController extends Controller
     public function index()
     {
         try {
-            $doctors = Doctor::all();
-            return view('admin.doctor.doctor', compact('doctors'));
+            /* Query Parameters */
+            $keyword = request()->keyword;
+            $rows = request()->rows ?? 25;
+            if ($rows == 'all') {
+                $rows = Doctor::count();
+            }
+            // Get the table columns
+            $doctorAllColumns = Schema::getColumnListing((new Doctor())->getTable());
+            $areaAllColumns = Schema::getColumnListing((new Area())->getTable());
+            $specialityAllColumns = Schema::getColumnListing((new Speciality())->getTable());
+
+            $doctors = Doctor::with('speciality', 'area')
+                ->when(isset($keyword), function ($query) use ($keyword, $doctorAllColumns, $areaAllColumns, $specialityAllColumns) {
+                    /* Searching in Doctor table */
+                    $query->where(function ($query) use ($keyword, $doctorAllColumns) {
+                        // Dynamically construct the search query
+                        foreach ($doctorAllColumns as $column) {
+                            $query->orWhere($column, 'LIKE', "%$keyword%");
+                        }
+                    });
+                    /* Searching in Speciality table */
+                    $query->orWhereHas('speciality', function ($query) use ($keyword, $specialityAllColumns) {
+                        $query->where(function ($query) use ($keyword, $specialityAllColumns) {
+                            foreach ($specialityAllColumns as $column) {
+                                $query->orWhere($column, 'LIKE', "%$keyword%");
+                            }
+                        });
+                    });
+                    /* Searching in Area table */
+                    $query->orWhereHas('area', function ($query) use ($keyword, $areaAllColumns) {
+                        $query->where(function ($query) use ($keyword, $areaAllColumns) {
+                            foreach ($areaAllColumns as $column) {
+                                $query->orWhere($column, 'LIKE', "%$keyword%");
+                            }
+                        });
+                    });
+                })
+                ->latest()
+                ->paginate($rows);
+
+            return view('admin.doctor.doctor', compact('doctors', 'keyword', 'rows'));
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', 'An error occurred while processing your request please try again later !!');
         }
